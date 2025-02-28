@@ -8,9 +8,9 @@ router.get("/", async (req, res) => {
   try {
     const categories = await Category.find();
     const products = await Products.find();
-    console.log(products, "PRODUCTTTTT");
+    let categoriesWithProducts = JSON.parse(JSON.stringify(categories));
     
-    categories.forEach(category => {
+    categoriesWithProducts.forEach(category => {
       category.subcategories.forEach(subcategory => {
         subcategory.products = [];  
         products.forEach(product => {
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     
 
     
-    res.json(categories);
+    res.json(categoriesWithProducts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
